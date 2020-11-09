@@ -1,5 +1,6 @@
 # spring-gatling
 
+[https://gatling.io/docs/current/extensions/gradle_plugin/](https://gatling.io/docs/current/extensions/gradle_plugin/)
 [https://github.com/gatling/gatling-gradle-plugin-demo](https://github.com/gatling/gatling-gradle-plugin-demo)
 
 [https://gatling.io/docs/current/general/simulation_setup/](https://gatling.io/docs/current/general/simulation_setup/)

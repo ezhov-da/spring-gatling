@@ -25,6 +25,6 @@ class Controller {
 
     @GetMapping(path = ["/ping/{value}"])
     fun getPong(@PathVariable("value") value: String): String {
-        return "pong [$value]"
+        return "pong [${value.reversed()}]"
     }
 }

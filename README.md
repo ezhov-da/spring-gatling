@@ -226,3 +226,42 @@ setUp(scn.inject(rampUsers(1000) during (20 minutes))).maxDuration(10 minutes)
 ./gradlew application:bootRun
 export JAVA_HOME={JAVA_PATH}; rm -rf load-tests/build/reports/; ./gradlew load-tests:gatlingRun-ru.ezhov.loadtests.SimpleSimulationIncrementUsersPerSec
 ```
+
+## application
+
+### REST
+
+```
+/ GET
+/ping/{value} GET
+```
+
+## Тестовая работа
+
+```
+// сборка приложения
+./gradlew application:build && docker build -t application:latest -f application/Dockerfile application
+
+// сборка нагрузочных тестов
+docker build -t loadtests:latest -f load-tests/Dockerfile load-tests
+
+winpty docker run -it loadtests:latest sh
+docker run --rm loadtests:latest
+```
+
+```
+// деплой приложения и сервиса для него в k8s
+kubectl config use-context "docker-desktop" && kubectl apply -f application/k8s.yml
+
+// деплой и запуск нагрузочных тестов для приложения
+// пока нет смысла запускать нагрузочные в кубере, так как нужно смотреть результаты тестов
+kubectl config use-context "docker-desktop" && kubectl apply -f load-tests/k8s.yml
+
+kubectl logs -f job.batch/load-tests --container=load-tests
+kubectl exec load-tests-fdlc4 -it --container=load-tests -- sh
+kubectl exec load-tests-mgbqs -it --container=report-pod -- sh
+
+kubectl delete job load-tests
+
+kubectl cp load-tests-gnzwm:/app/build/reports/gatling ./report/gatling
+```

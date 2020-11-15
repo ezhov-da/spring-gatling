@@ -7,7 +7,7 @@ import scala.concurrent.duration.DurationInt
 
 class SimpleSimulationConstantUsersPerSec extends Simulation {
   private val httpProtocol = http
-    .baseUrl("http://localhost:8080")
+    .baseUrl(Config.HOST)
 
   private val scn = scenario("Simple atOnceUsers")
     .exec(

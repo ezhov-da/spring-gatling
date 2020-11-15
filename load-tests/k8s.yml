@@ -1,0 +1,28 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load-tests
+spec:
+  template:
+    spec:
+      volumes:
+        - name: report-volume
+          emptyDir: {}
+      restartPolicy: Never
+      containers:
+        - name: load-tests
+          image: loadtests:latest
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: HOST
+              value: http://application-service:8080
+          volumeMounts:
+            - name: report-volume
+              mountPath: /report
+        - name: report-pod
+          image: busybox:latest
+          volumeMounts:
+            - name: report-volume
+              mountPath: /report
+...

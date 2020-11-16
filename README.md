@@ -224,6 +224,9 @@ setUp(scn.inject(rampUsers(1000) during (20 minutes))).maxDuration(10 minutes)
 
 ```
 ./gradlew application:bootRun
+// все тесты
+export JAVA_HOME={JAVA_PATH}; rm -rf load-tests/build/reports/; ./gradlew load-tests:gatlingRun
+// конкретный тест
 export JAVA_HOME={JAVA_PATH}; rm -rf load-tests/build/reports/; ./gradlew load-tests:gatlingRun-ru.ezhov.loadtests.SimpleSimulationIncrementUsersPerSec
 ```
 
